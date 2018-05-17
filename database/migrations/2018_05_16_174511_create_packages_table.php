@@ -15,12 +15,13 @@ class CreatePackagesTable extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('login');
-            $table->text('description');
-            $table->integer('watchers_count');
-            $table->integer('forks_count');
-            $table->integer('subscribers_count');
+            $table->string('name')->nullable();
+            $table->string('login')->nullable();
+            $table->string('html_url');
+            $table->text('description')->nullable();
+            $table->integer('watchers_count')->default(0);
+            $table->integer('forks_count')->default(0);
+            $table->integer('subscribers_count')->default(0);
             $table->timestamps();
         });
     }

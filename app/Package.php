@@ -9,9 +9,7 @@ class Package extends Model
     protected $fillable = [
         'name',
         'login',
+        'html_url',
         'description',
-        'watchers_count',
-        'forks_count',
-        'subscribers_count'
     ];
 }

@@ -11,8 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('packages', 'PackageController', ['except' => ['show', 'edit']]);
 
-Route::resource('packages', 'PackageController');
+Route::get('/packages/{login}/{name?}', 'PackageController@show')->name('packages.show');
