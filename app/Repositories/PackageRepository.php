@@ -13,7 +13,7 @@ class PackageRepository implements PackageInterface
     protected $request;
     protected $package;
 
-    public function __construct(Request $request, package $package)
+    public function __construct(Request $request, Package $package)
     {
         $this->request = $request;
         $this->package = $package;
@@ -24,38 +24,51 @@ class PackageRepository implements PackageInterface
         return $this->package->all();
     }
 
-    public function getPackages($login, $name)
+    public function getPackages($package_login)
     {
-        $packages = $this->package->where('login', $login);
-        if (!empty($name)) $packages->where('name', $name);
+        $packages = $this->package->where('login', $package_login)->get();
 
-        return $packages->get();
+        return $packages;
     }
 
-    public function getPackageReposData($html_url)
+    public function getOnePackage($package_login, $package_name)
+    {
+        $package = $this->package->where(['login' => $package_login, 'name' => $package_name]);
+
+        return $package->firstOrFail();
+    }
+
+    public function getContributors($package_id)
+    {
+        $contributors = Package::find($package_id)->contributors()->get();
+
+        return $contributors;
+    }
+
+    public function getPackageData()
     {
         try {
             $client = new Client();
             $package_full_name = substr(strchr($this->request->html_url, "github.com/"), 11);
             $response = $client->get('https://api.github.com/repos/' . $package_full_name)->getBody();
-            $repos_data = json_decode($response, true);
+            $package_data = json_decode($response, true);
 
-            return $repos_data;
+            return $package_data;
         } catch (RequestException $e) {
             return;
         }
     }
 
-    public function storePackage($repos_data)
+    public function storePackage($package_data)
     {
         $package = new Package;
-        $package->name = $repos_data["name"];
-        $package->login = $repos_data["owner"]["login"];
-        $package->html_url = $repos_data["html_url"];
-        $package->description = $repos_data["description"];
-        $package->watchers_count = $repos_data["watchers_count"];
-        $package->forks_count = $repos_data["forks_count"];
-        $package->subscribers_count = $repos_data["subscribers_count"];
+        $package->name = $package_data["name"];
+        $package->login = $package_data["owner"]["login"];
+        $package->html_url = $package_data["html_url"];
+        $package->description = $package_data["description"];
+        $package->watchers_count = $package_data["watchers_count"];
+        $package->forks_count = $package_data["forks_count"];
+        $package->subscribers_count = $package_data["subscribers_count"];
         $package->save();
 
         return $package;

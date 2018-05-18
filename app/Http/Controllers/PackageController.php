@@ -20,7 +20,7 @@ class PackageController extends Controller
     {
         $packages = $this->package->getAllPackages();
 
-        dd($packages);
+        return view('package.index', compact('packages'));
     }
 
     public function create()
@@ -34,17 +34,25 @@ class PackageController extends Controller
             'html_url' => 'required',
         ]);
 
-        $repos_data = $this->package->getPackageReposData($this->request->html_url);
-        if (empty($repos_data)) return redirect()->back()->withErrors(['message' => 'Whoops!']);
+        $package_data = $this->package->getPackageData($this->request->html_url);
+        if (empty($package_data)) return redirect()->back()->withErrors(['message' => 'Woops!']);
 
-        $package = $this->package->storePackage($repos_data);
+        $package = $this->package->storePackage($package_data);
         return redirect()->route('packages.show', [$package->login, $package->name]);
     }
 
-    public function show($login, $name = null)
+    public function list($package_login)
     {
-        $packages = $this->package->getPackages($login, $name);
+        $packages = $this->package->getPackages($package_login);
 
-        dd($packages);
+        return view('package.list', compact('packages'));
+    }
+
+    public function show($package_login, $package_name)
+    {
+        $package = $this->package->getOnePackage($package_login, $package_name);
+        $contributors = $this->package->getContributors($package->id);
+
+        return view('package.show', compact('package', 'contributors'));
     }
 }

@@ -17,6 +17,7 @@ class CreatePackagesTable extends Migration
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('login')->nullable();
+            $table->string('type')->nullable();
             $table->string('html_url');
             $table->text('description')->nullable();
             $table->integer('watchers_count')->default(0);
