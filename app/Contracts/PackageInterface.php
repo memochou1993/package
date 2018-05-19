@@ -9,8 +9,7 @@ interface PackageInterface
     public function getAllPackages();
     public function getPackages($package_login);
     public function getOnePackage($package_login, $package_name);
-    // public function getAllContributors();
-    public function getContributors($package_id);
+    public function getOnePackageContributors($package_id);
     public function getPackageData();
     public function storePackage($package_data);
 }

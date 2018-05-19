@@ -1,28 +1,32 @@
-<table border="1">
-    <tr>
-        <th>Login</th>
-        <th>Name</th>
-    </tr>
-    <tr>
-        <td>
-            <a href="/packages/{{ $package->login }}">
-                {{ $package->login }}
-            </a></td>
-        <td>{{ $package->name }}</td>
-    </tr>
-</table>
+@extends('layouts.app')
 
-<hr>
+@section('content')
+    <table border="1">
+        <tr>
+            <th>Login</th>
+            <th>Name</th>
+        </tr>
+        <tr>
+            <td>
+                <a href="/packages/{{ $package->login }}">
+                    {{ $package->login }}
+                </a></td>
+            <td>{{ $package->name }}</td>
+        </tr>
+    </table>
 
-<table border="1">
-    <tr>
-        <th>Login</th>
-        <th>Contribution</th>
-    </tr>
-    @foreach ($contributors as $contributor)
-    <tr>
-        <td>{{ $contributor->login }}</td>
-        <td>{{ $contributor->contribution }}</td>
-    </tr>
-    @endforeach
-</table>
+    <hr>
+
+    <table border="1">
+        <tr>
+            <th>Login</th>
+            <th>Contribution</th>
+        </tr>
+        @foreach ($contributors as $contributor)
+        <tr>
+            <td>{{ $contributor->login }}</td>
+            <td>{{ $contributor->pivot->contributions }}</td>
+        </tr>
+        @endforeach
+    </table>
+@endsection()

@@ -12,5 +12,13 @@ class ContributorsTableSeeder extends Seeder
     public function run()
     {
         factory(App\Contributor::class, 100)->create();
+
+        App\Contributor::insert([
+            ['login' => 'jasonlewis'],
+            ['login' => 'GrahamCampbell'],
+            ['login' => 'franzliedke'],
+            ['login' => 'daylerees'],
+            ['login' => 'taylorotwell'],
+        ]);
     }
 }

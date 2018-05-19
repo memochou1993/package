@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Contracts\PackageInterface;
+use App\Jobs\ProcessTest;
 
 class PackageController extends Controller
 {
@@ -20,6 +21,8 @@ class PackageController extends Controller
     {
         $packages = $this->package->getAllPackages();
 
+        ProcessTest::dispatch(); // 隊列測試
+
         return view('package.index', compact('packages'));
     }
 
@@ -31,13 +34,21 @@ class PackageController extends Controller
     public function store()
     {
         $this->validate($this->request, [
-            'html_url' => 'required',
+            'html_url' => 'required|unique:packages',
         ]);
 
         $package_data = $this->package->getPackageData($this->request->html_url);
-        if (empty($package_data)) return redirect()->back()->withErrors(['message' => 'Woops!']);
+
+        if (empty($package_data)) return redirect()->back()->withErrors(['message' => 'Package Not Found']);
 
         $package = $this->package->storePackage($package_data);
+
+        // 待移轉
+        $contributor_data = $this->package->getContributorData($package->login, $package->name);
+
+        // 待移轉
+        $contributors = $this->package->storeContributor($package->id, $contributor_data);
+
         return redirect()->route('packages.show', [$package->login, $package->name]);
     }
 
@@ -51,7 +62,7 @@ class PackageController extends Controller
     public function show($package_login, $package_name)
     {
         $package = $this->package->getOnePackage($package_login, $package_name);
-        $contributors = $this->package->getContributors($package->id);
+        $contributors = $this->package->getOnePackageContributors($package->id);
 
         return view('package.show', compact('package', 'contributors'));
     }

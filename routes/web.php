@@ -16,4 +16,4 @@ Route::resource('packages', 'PackageController', ['except' => ['show', 'edit']])
 Route::get('/packages/{package_login}', 'PackageController@list')->name('packages.list');
 Route::get('/packages/{package_login}/{package_name}', 'PackageController@show')->name('packages.show');
 
-// Route::resource('contributors', 'ContributorController', ['except' => ['edit']]);
+Route::resource('contributors', 'ContributorController', ['only' => ['index']]);

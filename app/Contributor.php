@@ -8,10 +8,10 @@ class Contributor extends Model
 {
     protected $table = 'contributors';
 
-    protected $guarded = ['*'];
+    // protected $fillable = ['login'];
 
     public function packages()
     {
-        return $this->belongsToMany(Package::class, 'package_contributor');
+        return $this->belongsToMany(Package::class, 'package_contributor')->withPivot('contributions');
     }
 }

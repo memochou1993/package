@@ -5,8 +5,9 @@ namespace App\Repositories;
 use Illuminate\Http\Request;
 use App\Contracts\PackageInterface;
 use App\Package;
+use App\Contributor; // 待移轉
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ClientException;
 
 class PackageRepository implements PackageInterface
 {
@@ -21,7 +22,9 @@ class PackageRepository implements PackageInterface
 
     public function getAllPackages()
     {
-        return $this->package->all();
+        $packages = $this->package->all();
+
+        return $packages;
     }
 
     public function getPackages($package_login)
@@ -38,7 +41,7 @@ class PackageRepository implements PackageInterface
         return $package->firstOrFail();
     }
 
-    public function getContributors($package_id)
+    public function getOnePackageContributors($package_id)
     {
         $contributors = Package::find($package_id)->contributors()->get();
 
@@ -54,7 +57,8 @@ class PackageRepository implements PackageInterface
             $package_data = json_decode($response, true);
 
             return $package_data;
-        } catch (RequestException $e) {
+        } catch (ClientException $e) {
+
             return;
         }
     }
@@ -72,5 +76,37 @@ class PackageRepository implements PackageInterface
         $package->save();
 
         return $package;
+    }
+
+    // 待移轉
+    public function getContributorData($package_login, $package_name)
+    {
+        try {
+            $client = new Client();
+            $package_full_name = $package_login . "/" . $package_name;
+            $response = $client->get('https://api.github.com/repos/' . $package_full_name . '/contributors')->getBody();
+            $contributor_data = json_decode($response, true);
+
+            return $contributor_data;
+        } catch (ClientException $e) {
+
+            return;
+        }
+    }
+
+    // 待移轉
+    public function storeContributor($package_id, $contributor_data)
+    {
+        foreach ($contributor_data as $contributor_data) {
+            $contributor = Contributor::where('login', $contributor_data["login"])->first();
+
+            if (empty($contributor)) {
+                $contributor = new Contributor;
+                $contributor->login = $contributor_data["login"];
+                $contributor->save();
+            }
+
+            $contributor->packages()->attach($package_id, ['contributions' => $contributor_data["contributions"]]);
+        }
     }
 }

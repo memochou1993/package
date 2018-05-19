@@ -14,6 +14,12 @@
 
     <body>
         <div id="app">
+            <a href="/packages">Packages</a>
+            <a href="/packages/create">Packages/create</a>
+            <a href="/contributors">Contributors</a>
+
+            <hr>
+
             @yield('content')
         </div>
     </body>
