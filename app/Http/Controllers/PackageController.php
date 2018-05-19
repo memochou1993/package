@@ -39,7 +39,7 @@ class PackageController extends Controller
 
         $package_data = $this->package->getPackageData($this->request->html_url);
 
-        if (empty($package_data)) return redirect()->back()->withErrors(['message' => 'Package Not Found']);
+        if (empty($package_data)) return redirect()->back()->withErrors(['message' => 'Package not found.']);
 
         $package = $this->package->storePackage($package_data);
 
