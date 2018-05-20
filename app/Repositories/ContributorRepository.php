@@ -17,6 +17,20 @@ class ContributorRepository implements ContributorInterface
         return $contributors;
     }
 
+    public function getOneContributor($contributor_login)
+    {
+        $contributor = Contributor::where('login', $contributor_login)->firstOrFail();
+
+        return $contributor;
+    }
+
+    public function getOneContributorPackages($contributor_id)
+    {
+        $packages = Contributor::find($contributor_id)->packages()->get();
+
+        return $packages;
+    }
+
     public function getContributorData($package_login, $package_name)
     {
         try {

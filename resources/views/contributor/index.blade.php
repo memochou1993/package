@@ -4,16 +4,14 @@
     @if (count($contributors) > 0)
         <table border="1">
             <tr>
-                <th>Id</th>
                 <th>Login</th>
             </tr>
             @foreach ($contributors as $contributor)
             <tr>
                 <td>
-                    {{ $contributor->id }}
-                </td>
-                <td>
-                    {{ $contributor->login }}
+                    <a href="/contributors/{{ $contributor->login }}">
+                        {{ $contributor->login }}
+                    </a>
                 </td>
             </tr>
             @endforeach

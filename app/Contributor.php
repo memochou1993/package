@@ -12,6 +12,8 @@ class Contributor extends Model
 
     public function packages()
     {
-        return $this->belongsToMany(Package::class, 'package_contributor')->withPivot('contributions');
+        return $this->belongsToMany(Package::class, 'package_contributor')
+            ->withTimestamps()
+            ->withPivot('contributions');
     }
 }

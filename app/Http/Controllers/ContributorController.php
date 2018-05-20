@@ -22,4 +22,12 @@ class ContributorController extends Controller
 
         return view('contributor.index', compact('contributors'));
     }
+
+    public function show($contributor_login)
+    {
+        $contributor = $this->contributor->getOneContributor($contributor_login);
+        $packages = $this->contributor->getOneContributorPackages($contributor->id);
+
+        return view('contributor.show', compact('contributor', 'packages'));
+    }
 }

@@ -10,7 +10,8 @@
             <td>
                 <a href="/packages/{{ $package->login }}">
                     {{ $package->login }}
-                </a></td>
+                </a>
+            </td>
             <td>{{ $package->name }}</td>
         </tr>
     </table>
@@ -20,12 +21,18 @@
     <table border="1">
         <tr>
             <th>Login</th>
-            <th>Contribution</th>
+            <th>Contributions</th>
+            <th>Created_at</th>
         </tr>
         @foreach ($contributors as $contributor)
         <tr>
-            <td>{{ $contributor->login }}</td>
+            <td>
+                <a href="/contributors/{{ $contributor->login }}">
+                    {{ $contributor->login }}
+                </a>
+            </td>
             <td>{{ $contributor->pivot->contributions }}</td>
+            <td>{{ $contributor->pivot->created_at }}</td>
         </tr>
         @endforeach
     </table>
