@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Contracts\PackageInterface;
 use App\Repositories\PackageRepository;
+use App\Contracts\ContributorInterface;
+use App\Repositories\ContributorRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -21,10 +23,17 @@ class RepositoryServiceProvider extends ServiceProvider
             PackageInterface::class,
             PackageRepository::class
         );
+        $this->app->bind(
+            ContributorInterface::class,
+            ContributorRepository::class
+        );
     }
 
     public function provides()
     {
-        return [PackageInterface::class];
+        return [
+            PackageInterface::class,
+            ContributorInterface::class
+        ];
     }
 }

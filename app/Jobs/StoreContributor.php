@@ -7,20 +7,23 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use App\Contracts\ContributorInterface;
 use App\Package;
 
-class ProcessTest implements ShouldQueue
+class StoreContributor implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    protected $package;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Package $package)
     {
-        //
+        $this->package = $package;
     }
 
     /**
@@ -28,11 +31,10 @@ class ProcessTest implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(ContributorInterface $contributor)
     {
-        $package = new Package;
-        $package->name = "Test";
-        $package->html_url = "Test";
-        $package->save();
+        $contributor_data = $contributor->getContributorData($this->package->login, $this->package->name);
+
+        $contributor = $contributor->storeContributor($this->package->id, $contributor_data);
     }
 }

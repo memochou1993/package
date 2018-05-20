@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Contracts\PackageInterface;
-use App\Jobs\ProcessTest;
+use App\Jobs\StoreContributor;
 
 class PackageController extends Controller
 {
@@ -20,8 +20,6 @@ class PackageController extends Controller
     public function index()
     {
         $packages = $this->package->getAllPackages();
-
-        ProcessTest::dispatch(); // 隊列測試
 
         return view('package.index', compact('packages'));
     }
@@ -43,11 +41,7 @@ class PackageController extends Controller
 
         $package = $this->package->storePackage($package_data);
 
-        // 待移轉
-        $contributor_data = $this->package->getContributorData($package->login, $package->name);
-
-        // 待移轉
-        $contributors = $this->package->storeContributor($package->id, $contributor_data);
+        dispatch(New StoreContributor($package));
 
         return redirect()->route('packages.show', [$package->login, $package->name]);
     }
