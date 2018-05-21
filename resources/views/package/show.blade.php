@@ -17,12 +17,16 @@
             <td>{{ $package->name }}</td>
             <td>
                 @foreach ($package->contributors as $contributor)
-                    {{ $contributor->name }};
+                    <a href="/contributors/{{ $contributor->login }}">
+                        {{ $contributor->name }};
+                    </a>
                 @endforeach
             </td>
             <td>
                 @foreach ($package->tags as $tag)
-                    {{ $tag->name }};
+                    <button>
+                        {{ $tag->name }};
+                    </button>
                 @endforeach
             </td>
         </tr>
