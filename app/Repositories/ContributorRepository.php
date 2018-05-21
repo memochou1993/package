@@ -57,7 +57,7 @@ class ContributorRepository implements ContributorInterface
                 $contributor->save();
             }
 
-            $contributor->packages()->attach($package_id, ['contributions' => $contributor_data["contributions"]]);
+            $contributor->packages()->attach($package_id);
         }
     }
 }

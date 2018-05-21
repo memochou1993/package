@@ -19,7 +19,6 @@ class CreatePackageContributorTable extends Migration
             $table->foreign('package_id')->references('id')->on('packages');
             $table->integer('contributor_id')->unsigned();
             $table->foreign('contributor_id')->references('id')->on('contributors');
-            $table->integer('contributions')->default(0);
             $table->timestamps();
         });
     }

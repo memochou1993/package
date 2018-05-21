@@ -13,7 +13,6 @@ class Package extends Model
     public function contributors()
     {
         return $this->belongsToMany(Contributor::class, 'package_contributor')
-            ->withTimestamps()
-            ->withPivot('contributions');
+            ->withTimestamps();
     }
 }
