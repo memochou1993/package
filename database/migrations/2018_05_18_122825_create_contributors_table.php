@@ -16,6 +16,7 @@ class CreateContributorsTable extends Migration
         Schema::create('contributors', function (Blueprint $table) {
             $table->increments('id');
             $table->string('login');
+            $table->string('name');
             $table->timestamps();
         });
     }

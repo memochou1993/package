@@ -4,9 +4,11 @@
     <table border="1">
         <tr>
             <th>Login</th>
+            <th>Name</th>
         </tr>
         <tr>
             <td>{{ $contributor->login }}</td>
+            <td>{{ $contributor->name }}</td>
         </tr>
     </table>
 
@@ -16,7 +18,6 @@
         <tr>
             <th>Login</th>
             <th>Name</th>
-            <th>Contributions</th>
             <th>Created_at</th>
         </tr>
         @foreach ($packages as $package)
@@ -31,7 +32,6 @@
                     {{ $package->name }}
                 </a>
             </td>
-            <td>{{ $package->pivot->contributions }}</td>
             <td>{{ $package->pivot->created_at }}</td>
         </tr>
         @endforeach

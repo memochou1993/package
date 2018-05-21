@@ -41,11 +41,11 @@ class PackageRepository implements PackageInterface
         return $package->firstOrFail();
     }
 
-    public function getOnePackageContributors($package_id)
+    public function getOnePackageContributor($package_id)
     {
-        $contributors = Package::find($package_id)->contributors()->get();
+        $contributor = Package::find($package_id)->contributors()->first();
 
-        return $contributors;
+        return $contributor;
     }
 
     public function getPackageData()

@@ -14,11 +14,11 @@ class ContributorsTableSeeder extends Seeder
         factory(App\Contributor::class, 100)->create();
 
         App\Contributor::insert([
-            ['login' => 'jasonlewis'],
-            ['login' => 'GrahamCampbell'],
-            ['login' => 'franzliedke'],
-            ['login' => 'daylerees'],
-            ['login' => 'taylorotwell'],
+            ['login' => 'jasonlewis', 'name' => 'Jason Lewis'],
+            ['login' => 'GrahamCampbell', 'name' => 'Graham Campbell'],
+            ['login' => 'franzliedke', 'name' => 'Franz Liedke'],
+            ['login' => 'daylerees', 'name' => 'Dayle Rees'],
+            ['login' => 'taylorotwell', 'name' => 'Taylor Otwell'],
         ]);
     }
 }

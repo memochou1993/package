@@ -37,6 +37,8 @@ class ContributorRepository implements ContributorInterface
             $client = new Client();
             $package_full_name = $package_login . "/" . $package_name;
             $response = $client->get('https://api.github.com/repos/' . $package_full_name . '/contributors')->getBody();
+            $response = json_decode($response, true);
+            $response = $client->get('https://api.github.com/users/' . $response[0]["login"])->getBody();
             $contributor_data = json_decode($response, true);
 
             return $contributor_data;
@@ -48,16 +50,15 @@ class ContributorRepository implements ContributorInterface
 
     public function storeContributor($package_id, $contributor_data)
     {
-        foreach ($contributor_data as $contributor_data) {
-            $contributor = Contributor::where('login', $contributor_data["login"])->first();
+        $contributor = Contributor::where('login', $contributor_data["login"])->first();
 
-            if (empty($contributor)) {
-                $contributor = new Contributor;
-                $contributor->login = $contributor_data["login"];
-                $contributor->save();
-            }
-
-            $contributor->packages()->attach($package_id);
+        if (empty($contributor)) {
+            $contributor = new Contributor;
+            $contributor->login = $contributor_data["login"];
+            $contributor->login = $contributor_data["name"];
+            $contributor->save();
         }
+
+        $contributor->packages()->attach($package_id);
     }
 }
