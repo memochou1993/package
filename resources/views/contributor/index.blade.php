@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-@if (count($contributors) > 0)
-        <table border="1">
+    @if (count($contributors) > 0)
+        <table class="table">
             <tr>
                 <th>Login</th>
                 <th>Name</th>

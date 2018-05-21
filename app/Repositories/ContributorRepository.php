@@ -48,7 +48,7 @@ class ContributorRepository implements ContributorInterface
         if (empty($contributor)) {
             $contributor = new Contributor;
             $contributor->login = $contributor_data["login"];
-            $contributor->login = $contributor_data["name"];
+            $contributor->name = $contributor_data["name"];
             $contributor->save();
         }
 

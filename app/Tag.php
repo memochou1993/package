@@ -10,6 +10,6 @@ class Tag extends Model
 
     public function packages()
     {
-        return $this->belongsToMany(Package::class, 'package_contributor');
+        return $this->belongsToMany(Package::class, 'package_tag');
     }
 }

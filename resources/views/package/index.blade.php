@@ -2,7 +2,7 @@
 
 @section('content')
     @if (count($packages) > 0)
-        <table border="1">
+        <table class="table">
             <tr>
                 <th>Login</th>
                 <th>Name</th>
@@ -24,9 +24,9 @@
                 <td>{{ $package->description }}</td>
                 <td>
                     @foreach ($package->tags as $tag)
-                        <button>
+                        <a href="/tags/{{ $tag->name }}" class="btn btn-outline-success">
                             {{ $tag->name }}
-                        </button>
+                        </a>
                     @endforeach
                 </td>
             </tr>

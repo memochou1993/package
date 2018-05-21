@@ -5,7 +5,6 @@ namespace App\Repositories;
 use Illuminate\Http\Request;
 use App\Contracts\PackageInterface;
 use App\Package;
-use App\Contributor;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 
@@ -22,7 +21,7 @@ class PackageRepository implements PackageInterface
 
     public function getAllPackages()
     {
-        $packages = $this->package->with('tags')->get();
+        $packages = $this->package->get();
 
         return $packages;
     }
@@ -36,9 +35,9 @@ class PackageRepository implements PackageInterface
 
     public function getOnePackage($package_login, $package_name)
     {
-        $package = $this->package->with('contributors')->with('tags')->where(['login' => $package_login, 'name' => $package_name]);
+        $package = $this->package->with('contributors')->with('tags')->where(['login' => $package_login, 'name' => $package_name])->firstOrFail();
 
-        return $package->firstOrFail();
+        return $package;
     }
 
     public function getPackageData()

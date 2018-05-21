@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <table border="1">
+    <table class="table">
         <tr>
             <th>Login</th>
             <th>Name</th>
@@ -14,7 +14,7 @@
 
     <hr>
 
-    <table border="1">
+    <table class="table">
         <tr>
             <th>Login</th>
             <th>Name</th>
@@ -35,9 +35,9 @@
             </td>
             <td>
                 @foreach ($package->tags as $tag)
-                    <button>
+                    <a href="/tags/{{ $tag->name }}" class="btn btn-outline-success">
                         {{ $tag->name }}
-                    </button>
+                    </a>
                 @endforeach
             </td>
             <td>{{ $package->pivot->created_at }}</td>

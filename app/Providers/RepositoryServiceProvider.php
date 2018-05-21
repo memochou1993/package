@@ -7,6 +7,8 @@ use App\Contracts\PackageInterface;
 use App\Repositories\PackageRepository;
 use App\Contracts\ContributorInterface;
 use App\Repositories\ContributorRepository;
+use App\Contracts\TagInterface;
+use App\Repositories\TagRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -27,13 +29,18 @@ class RepositoryServiceProvider extends ServiceProvider
             ContributorInterface::class,
             ContributorRepository::class
         );
+        $this->app->bind(
+            TagInterface::class,
+            TagRepository::class
+        );
     }
 
     public function provides()
     {
         return [
             PackageInterface::class,
-            ContributorInterface::class
+            ContributorInterface::class,
+            TagInterface::class
         ];
     }
 }
