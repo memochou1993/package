@@ -37,7 +37,7 @@ class PackageController extends Controller
 
         $package_data = $this->package->getPackageData($this->request->html_url);
 
-        if (!is_array($package_data)) return redirect()->back()->withErrors(['message' => $package_data]);
+        if (empty($package_data)) return redirect()->back()->withErrors(['message' => "Package not found."]);
 
         $package = $this->package->storePackage($package_data);
 
@@ -56,8 +56,7 @@ class PackageController extends Controller
     public function show($package_login, $package_name)
     {
         $package = $this->package->getOnePackage($package_login, $package_name);
-        $topics = $this->package->getOnePackageTopics($package->id);
 
-        return view('package.show', compact('package', 'contributor', 'topics'));
+        return view('package.show', compact('package'));
     }
 }
