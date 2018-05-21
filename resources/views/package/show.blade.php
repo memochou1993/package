@@ -5,6 +5,8 @@
         <tr>
             <th>Login</th>
             <th>Name</th>
+            <th>Contributor</th>
+            <th>Topics</th>
         </tr>
         <tr>
             <td>
@@ -13,27 +15,16 @@
                 </a>
             </td>
             <td>{{ $package->name }}</td>
-        </tr>
-    </table>
-
-    <hr>
-
-    @if (!empty($contributor))
-    <table border="1">
-        <tr>
-            <th>Login</th>
-            <th>Name</th>
-            <th>Created_at</th>
-        </tr>
-        <tr>
             <td>
-                <a href="/contributors/{{ $contributor->login }}">
-                    {{ $contributor->login }}
-                </a>
+                @foreach ($package->contributors as $contributor)
+                    {{ $contributor->name }};
+                @endforeach
             </td>
-            <td>{{ $contributor->name }}</td>
-            <td>{{ $contributor->pivot->created_at }}</td>
+            <td>
+                @foreach ($package->topics as $topic)
+                    {{ $topic->name }};
+                @endforeach
+            </td>
         </tr>
     </table>
-    @endif
 @endsection()

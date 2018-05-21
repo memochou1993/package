@@ -7,6 +7,7 @@
                 <th>Login</th>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Topic</th>
             </tr>
             @foreach ($packages as $package)
             <tr>
@@ -21,6 +22,13 @@
                     </a>
                 </td>
                 <td>{{ $package->description }}</td>
+                <td>
+                    @foreach ($package->topics as $topic)
+                        <button>
+                            {{ $topic->name }}
+                        </button>
+                    @endforeach
+                </td>
             </tr>
             @endforeach
         </table>

@@ -41,7 +41,7 @@ class PackageController extends Controller
 
         $package = $this->package->storePackage($package_data);
 
-        dispatch(New StoreContributor($package));
+        StoreContributor::dispatch($package);
 
         return redirect()->route('packages.show', [$package->login, $package->name]);
     }
@@ -56,8 +56,8 @@ class PackageController extends Controller
     public function show($package_login, $package_name)
     {
         $package = $this->package->getOnePackage($package_login, $package_name);
-        $contributor = $this->package->getOnePackageContributor($package->id);
+        $topics = $this->package->getOnePackageTopics($package->id);
 
-        return view('package.show', compact('package', 'contributor'));
+        return view('package.show', compact('package', 'contributor', 'topics'));
     }
 }

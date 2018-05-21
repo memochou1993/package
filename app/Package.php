@@ -15,4 +15,10 @@ class Package extends Model
         return $this->belongsToMany(Contributor::class, 'package_contributor')
             ->withTimestamps();
     }
+
+    public function topics()
+    {
+        return $this->belongsToMany(Topic::class, 'package_topic')
+            ->withTimestamps();
+    }
 }
