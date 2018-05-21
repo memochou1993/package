@@ -16,9 +16,9 @@ class CreatePackageContributorTable extends Migration
         Schema::create('package_contributor', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('package_id')->unsigned();
-            $table->foreign('package_id')->references('id')->on('packages');
+            $table->foreign('package_id')->references('id')->on('packages')->onDelete('cascade');
             $table->integer('contributor_id')->unsigned();
-            $table->foreign('contributor_id')->references('id')->on('contributors');
+            $table->foreign('contributor_id')->references('id')->on('contributors')->onDelete('cascade');
             $table->timestamps();
         });
     }

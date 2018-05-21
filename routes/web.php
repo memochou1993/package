@@ -18,3 +18,11 @@ Route::get('/packages/{package_login}/{package_name}', 'PackageController@show')
 
 Route::resource('contributors', 'ContributorController', ['only' => ['index', 'show']]);
 Route::get('/contributors/{contributor_login}', 'ContributorController@show')->name('contributors.show');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

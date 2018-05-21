@@ -16,9 +16,9 @@ class CreatePackageTopicsTable extends Migration
         Schema::create('package_topic', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('package_id')->unsigned();
-            $table->foreign('package_id')->references('id')->on('packages');
+            $table->foreign('package_id')->references('id')->on('packages')->onDelete('cascade');
             $table->integer('topic_id')->unsigned();
-            $table->foreign('topic_id')->references('id')->on('topics');
+            $table->foreign('topic_id')->references('id')->on('topics')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreatePackageTopicsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('package_topics');
+        Schema::dropIfExists('package_topic');
     }
 }
