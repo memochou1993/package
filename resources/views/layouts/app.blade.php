@@ -25,9 +25,12 @@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                Packages
+                                Package
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('packages.index') }}">
+                                    Browse
+                                </a>
                                 <a class="dropdown-item" href="{{ route('packages.create') }}">
                                     Create
                                 </a>

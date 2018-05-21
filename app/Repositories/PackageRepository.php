@@ -22,7 +22,7 @@ class PackageRepository implements PackageInterface
 
     public function getAllPackages()
     {
-        $packages = $this->package->with('topics')->get();
+        $packages = $this->package->with('tags')->get();
 
         return $packages;
     }
@@ -36,23 +36,9 @@ class PackageRepository implements PackageInterface
 
     public function getOnePackage($package_login, $package_name)
     {
-        $package = $this->package->with('contributors')->with('topics')->where(['login' => $package_login, 'name' => $package_name]);
+        $package = $this->package->with('contributors')->with('tags')->where(['login' => $package_login, 'name' => $package_name]);
 
         return $package->firstOrFail();
-    }
-
-    public function getOnePackageContributor($package_id)
-    {
-        $contributor = Package::find($package_id)->contributors()->first();
-
-        return $contributor;
-    }
-
-    public function getOnePackageTopics($package_id)
-    {
-        $topics = Package::find($package_id)->topics()->get();
-
-        return $topics;
     }
 
     public function getPackageData()

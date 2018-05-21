@@ -6,7 +6,7 @@
             <th>Login</th>
             <th>Name</th>
             <th>Contributor</th>
-            <th>Topics</th>
+            <th>Tags</th>
         </tr>
         <tr>
             <td>
@@ -21,8 +21,8 @@
                 @endforeach
             </td>
             <td>
-                @foreach ($package->topics as $topic)
-                    {{ $topic->name }};
+                @foreach ($package->tags as $tag)
+                    {{ $tag->name }};
                 @endforeach
             </td>
         </tr>

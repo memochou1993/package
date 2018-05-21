@@ -16,9 +16,9 @@ class Package extends Model
             ->withTimestamps();
     }
 
-    public function topics()
+    public function tags()
     {
-        return $this->belongsToMany(Topic::class, 'package_topic')
+        return $this->belongsToMany(Tag::class, 'package_tag')
             ->withTimestamps();
     }
 }

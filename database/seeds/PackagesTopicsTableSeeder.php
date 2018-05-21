@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class PackagesTopicsTableSeeder extends Seeder
+class PackagesTagsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class PackagesTopicsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\PackageTopic::class, 100)->create();
+        factory(App\PackageTag::class, 100)->create();
     }
 }
