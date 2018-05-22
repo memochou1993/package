@@ -4,24 +4,44 @@ namespace App\Repositories;
 
 use Illuminate\Http\Request;
 use App\Contracts\ContributorInterface;
+use App\Package;
 use App\Contributor;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 
 class ContributorRepository implements ContributorInterface
 {
-    public function getAllContributors()
-    {
-        $contributors = Contributor::with('packages')->get();
+    protected $request;
+    protected $package;
+    protected $contributor;
 
-        return $contributors;
+    public function __construct(Request $request, Package $package, Contributor $contributor)
+    {
+        $this->request = $request;
+        $this->package = $package;
+        $this->contributor = $contributor;
     }
 
-    public function getOneContributor($contributor_login)
+    public function getAllContributors()
     {
-        $contributor = Contributor::where('login', $contributor_login)->firstOrFail();
+        $contributors = $this->contributor->get();
+
+        return $contributors;
+
+    }
+
+    public function getContributorByLogin($contributor_login)
+    {
+        $contributor = $this->contributor->where('login', $contributor_login)->firstOrFail();
 
         return $contributor;
+    }
+
+    public function getContributorsByPackage($package_id)
+    {
+        $contributors = $this->package->find($package_id)->contributors()->get();
+
+        return $contributors;
     }
 
     public function getContributorData($package_login, $package_name)
@@ -43,7 +63,7 @@ class ContributorRepository implements ContributorInterface
 
     public function storeContributor($package_id, $contributor_data)
     {
-        $contributor = Contributor::firstOrCreate([
+        $contributor = $this->contributor->firstOrCreate([
             'login' => $contributor_data["login"],
         ], [
             'login' => $contributor_data["login"],

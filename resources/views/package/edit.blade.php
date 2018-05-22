@@ -21,16 +21,4 @@
             <input type="submit" class="btn btn-primary btn-lg btn-block">
         </div>
     </form>
-    <hr>
-    <form action="{{ route('tags.store') }}" method="POST" class="needs-validation">
-        @csrf
-
-        <div class="mb-3">
-            <label for="name">Name</label>
-            <input type="text" name="name" value="" class="form-control" id="name">
-        </div>
-        <div class="mb-3">
-            <input type="submit" class="btn btn-primary btn-lg btn-block">
-        </div>
-    </form>
 @endsection

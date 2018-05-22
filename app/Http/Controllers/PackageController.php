@@ -48,21 +48,21 @@ class PackageController extends Controller
 
     public function list($package_login)
     {
-        $packages = $this->package->getPackages($package_login);
+        $packages = $this->package->getPackageByLogin($package_login);
 
         return view('package.list', compact('packages'));
     }
 
     public function show($package_login, $package_name)
     {
-        $package = $this->package->getOnePackage($package_login, $package_name);
+        $package = $this->package->getPackageByFullName($package_login, $package_name);
 
         return view('package.show', compact('package'));
     }
 
     public function edit($package_login, $package_name)
     {
-        $package = $this->package->getOnePackage($package_login, $package_name);
+        $package = $this->package->getPackageByFullName($package_login, $package_name);
 
         return view('package.edit', compact('package'));
     }

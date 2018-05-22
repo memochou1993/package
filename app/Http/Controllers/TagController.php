@@ -25,8 +25,15 @@ class TagController extends Controller
 
     public function show($tag_name)
     {
-        $tag = $this->tag->getOneTag($tag_name);
+        $tag = $this->tag->getTagByName($tag_name);
 
         return view('tag.show', compact('tag'));
+    }
+
+    public function create($package_id)
+    {
+        $tags = $this->tag->getTagsByPackage($package_id);
+
+        return view('package.tag.create', compact('tags'));
     }
 }

@@ -26,14 +26,14 @@ class PackageRepository implements PackageInterface
         return $packages;
     }
 
-    public function getPackages($package_login)
+    public function getPackageByLogin($package_login)
     {
         $packages = $this->package->where('login', $package_login)->get();
 
         return $packages;
     }
 
-    public function getOnePackage($package_login, $package_name)
+    public function getPackageByFullName($package_login, $package_name)
     {
         $package = $this->package->where(['login' => $package_login, 'name' => $package_name])->firstOrFail();
 

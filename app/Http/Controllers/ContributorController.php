@@ -25,8 +25,15 @@ class ContributorController extends Controller
 
     public function show($contributor_login)
     {
-        $contributor = $this->contributor->getOneContributor($contributor_login);
+        $contributor = $this->contributor->getContributorByLogin($contributor_login);
 
         return view('contributor.show', compact('contributor'));
+    }
+
+    public function create($package_id)
+    {
+        $contributors = $this->contributor->getContributorsByPackage($package_id);
+
+        return view('package.contributor.create', compact('contributors'));
     }
 }

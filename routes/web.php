@@ -22,6 +22,8 @@ Route::prefix('packages')->group(function () {
     Route::get('/{package_login}/{package_name}', 'PackageController@show')->name('packages.show');
     Route::get('/{package_login}/{package_name}/edit', 'PackageController@edit')->name('packages.edit');
 });
+Route::resource('packages.contributors', 'ContributorController', ['only' => ['create', 'store', 'delete']]);
+Route::resource('packages.tags', 'TagController', ['only' => ['create', 'store', 'delete']]);
 
 /* Contributors */
 Route::resource('contributors', 'ContributorController', ['only' => ['index', 'store', 'delete']]);
