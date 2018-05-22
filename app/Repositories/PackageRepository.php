@@ -21,7 +21,7 @@ class PackageRepository implements PackageInterface
 
     public function getAllPackages()
     {
-        $packages = $this->package->get();
+        $packages = $this->package->all();
 
         return $packages;
     }
@@ -40,11 +40,18 @@ class PackageRepository implements PackageInterface
         return $package;
     }
 
-    public function getPackageData()
+    public function getPackageById($package_id)
+    {
+        $package = $this->package->find($package_id)->firstOrFail();
+
+        return $package;
+    }
+
+    public function getPackageData($package_html_url)
     {
         try {
             $client = new Client();
-            $package_full_name = substr(strchr($this->request->html_url, "github.com/"), 11);
+            $package_full_name = substr(strchr($package_html_url, "github.com/"), 11);
             $response = $client->get('https://api.github.com/repos/' . $package_full_name)->getBody();
             $package_data = json_decode($response, true);
 

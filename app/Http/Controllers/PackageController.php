@@ -60,9 +60,9 @@ class PackageController extends Controller
         return view('package.show', compact('package'));
     }
 
-    public function edit($package_login, $package_name)
+    public function edit($package_id)
     {
-        $package = $this->package->getPackageByFullName($package_login, $package_name);
+        $package = $this->package->getPackageById($package_id);
 
         return view('package.edit', compact('package'));
     }

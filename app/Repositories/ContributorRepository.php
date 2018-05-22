@@ -24,7 +24,7 @@ class ContributorRepository implements ContributorInterface
 
     public function getAllContributors()
     {
-        $contributors = $this->contributor->get();
+        $contributors = $this->contributor->all();
 
         return $contributors;
 
