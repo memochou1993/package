@@ -8,7 +8,7 @@ class Contributor extends Model
 {
     protected $table = 'contributors';
 
-    // protected $fillable = ['login', 'name'];
+    protected $fillable = ['login', 'name'];
 
     public function packages()
     {

@@ -17,13 +17,16 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 /* Packages */
 Route::resource('packages', 'PackageController', ['except' => ['show', 'edit']]);
-Route::get('/packages/{package_login}', 'PackageController@list')->name('packages.list');
-Route::get('/packages/{package_login}/{package_name}', 'PackageController@show')->name('packages.show');
+Route::prefix('packages')->group(function () {
+    Route::get('/{package_login}', 'PackageController@list')->name('packages.list');
+    Route::get('/{package_login}/{package_name}', 'PackageController@show')->name('packages.show');
+    Route::get('/{package_login}/{package_name}/edit', 'PackageController@edit')->name('packages.edit');
+});
 
 /* Contributors */
-Route::resource('contributors', 'ContributorController', ['only' => ['index', 'show']]);
+Route::resource('contributors', 'ContributorController', ['only' => ['index', 'store', 'delete']]);
 Route::get('/contributors/{contributor_login}', 'ContributorController@show')->name('contributors.show');
 
 /* Tags */
-Route::resource('tags', 'TagController', ['only' => ['index', 'show']]);
+Route::resource('tags', 'TagController', ['only' => ['index', 'store', 'delete']]);
 Route::get('/tags/{tag_name}', 'TagController@show')->name('tags.show');

@@ -43,14 +43,12 @@ class ContributorRepository implements ContributorInterface
 
     public function storeContributor($package_id, $contributor_data)
     {
-        $contributor = Contributor::where('login', $contributor_data["login"])->first();
-
-        if (empty($contributor)) {
-            $contributor = new Contributor;
-            $contributor->login = $contributor_data["login"];
-            $contributor->name = $contributor_data["name"];
-            $contributor->save();
-        }
+        $contributor = Contributor::firstOrCreate([
+            'login' => $contributor_data["login"],
+        ], [
+            'login' => $contributor_data["login"],
+            'name' => $contributor_data["name"],
+        ]);
 
         $contributor->packages()->attach($package_id);
     }

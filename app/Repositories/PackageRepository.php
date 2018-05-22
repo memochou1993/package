@@ -35,7 +35,7 @@ class PackageRepository implements PackageInterface
 
     public function getOnePackage($package_login, $package_name)
     {
-        $package = $this->package->with('contributors')->with('tags')->where(['login' => $package_login, 'name' => $package_name])->firstOrFail();
+        $package = $this->package->where(['login' => $package_login, 'name' => $package_name])->firstOrFail();
 
         return $package;
     }
@@ -65,6 +65,15 @@ class PackageRepository implements PackageInterface
         $package->watchers_count = $package_data["watchers_count"];
         $package->forks_count = $package_data["forks_count"];
         $package->subscribers_count = $package_data["subscribers_count"];
+        $package->save();
+
+        return $package;
+    }
+
+    public function updatePackage($package_id)
+    {
+        $package = $this->package->find($package_id);
+        $package->description = $this->request->description;
         $package->save();
 
         return $package;

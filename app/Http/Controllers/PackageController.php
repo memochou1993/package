@@ -59,4 +59,18 @@ class PackageController extends Controller
 
         return view('package.show', compact('package'));
     }
+
+    public function edit($package_login, $package_name)
+    {
+        $package = $this->package->getOnePackage($package_login, $package_name);
+
+        return view('package.edit', compact('package'));
+    }
+
+    public function update($package_id)
+    {
+        $package = $this->package->updatePackage($package_id);
+
+        return redirect()->route('packages.show', [$package->login, $package->name]);
+    }
 }

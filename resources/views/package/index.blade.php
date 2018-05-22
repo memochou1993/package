@@ -2,35 +2,30 @@
 
 @section('content')
     @if (count($packages) > 0)
-        <table class="table">
-            <tr>
-                <th>Login</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Tag</th>
-            </tr>
+        <div class="d-flex flex-wrap">
             @foreach ($packages as $package)
-            <tr>
-                <td>
-                    <a href="/packages/{{ $package->login }}">
-                        {{ $package->login }}
-                    </a>
-                </td>
-                <td>
-                    <a href="/packages/{{ $package->login }}/{{ $package->name }}">
-                        {{ $package->name }}
-                    </a>
-                </td>
-                <td>{{ $package->description }}</td>
-                <td>
-                    @foreach ($package->tags as $tag)
-                        <a href="/tags/{{ $tag->name }}" class="btn btn-outline-success">
-                            {{ $tag->name }}
-                        </a>
-                    @endforeach
-                </td>
-            </tr>
+                <div class="col-sm-6">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h3 class="card-title">
+                                <a href="/packages/{{ $package->login }}/{{ $package->name }}">
+                                    {{ $package->login }}/{{ $package->name }}
+                                </a>
+                            </h3>
+
+                            <p class="card-text">
+                                {{ $package->description }}
+                            </p>
+
+                            @foreach ($package->tags as $tag)
+                                <a href="/tags/{{ $tag->name }}" class="badge badge-success">
+                                    {{ $tag->name }}
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
             @endforeach
-        </table>
+        </div>
     @endif
-@endsection()
+@endsection

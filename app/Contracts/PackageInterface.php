@@ -9,4 +9,5 @@ interface PackageInterface
     public function getOnePackage($package_login, $package_name);
     public function getPackageData();
     public function storePackage($package_data);
+    public function updatePackage($package_id);
 }
