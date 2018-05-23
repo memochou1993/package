@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
-    protected $fillable = ['topic', 'name'];
+    protected $fillable = ['type', 'name'];
 
     public function packages()
     {

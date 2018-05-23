@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Contracts\PackageInterface;
 use App\Jobs\StoreContributor;
+use App\Jobs\StoreTag;
 
 class PackageController extends Controller
 {
@@ -42,6 +43,8 @@ class PackageController extends Controller
         $package = $this->package->storePackage($package_data);
 
         StoreContributor::dispatch($package);
+
+        StoreTag::dispatch($package);
 
         return redirect()->route('packages.show', [$package->login, $package->name]);
     }
