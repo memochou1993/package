@@ -19,14 +19,14 @@
             <td>
                 @foreach ($package->contributors as $contributor)
                     <a href="/contributors/{{ $contributor->login }}">
-                        {{ $contributor->name }};
+                        {{ $contributor->name }}
                     </a>
                 @endforeach
             </td>
             <td>{{ $package->description }}</td>
             <td>
                 @foreach ($package->tags as $tag)
-                    <a href="/tags/{{ $tag->name }}" class="btn btn-outline-success">
+                    <a href="/tags/{{ $tag->name }}" class="badge badge-success">
                         {{ $tag->name }}
                     </a>
                 @endforeach

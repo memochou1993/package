@@ -2,7 +2,7 @@
 
 @section('content')
     @foreach ($contributors as $contributor)
-        <a href="/contributors/{{ $contributor->name }}" class="btn btn-outline-success">
+        <a href="/contributors/{{ $contributor->name }}">
             {{ $contributor->name }}
         </a>
     @endforeach

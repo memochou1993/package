@@ -33,7 +33,7 @@
             </td>
             <td>
                 @foreach ($package->tags as $tag)
-                    <a href="/tags/{{ $tag->name }}" class="btn btn-outline-success">
+                    <a href="/tags/{{ $tag->name }}" class="badge badge-success">
                         {{ $tag->name }}
                     </a>
                 @endforeach
