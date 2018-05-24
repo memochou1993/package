@@ -36,11 +36,9 @@ class PackageController extends Controller
             'html_url' => 'required|unique:packages',
         ]);
 
-        $package_data = $this->package->getPackageData($this->request->html_url);
+        $package = $this->package->storePackage($this->request->html_url);
 
-        if (empty($package_data)) return redirect()->back()->withErrors(['message' => "Package not found."]);
-
-        $package = $this->package->storePackage($package_data);
+        if (empty($package)) return redirect()->back()->withErrors(['message' => "Package not found."]);
 
         StoreContributor::dispatch($package);
 

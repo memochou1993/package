@@ -47,23 +47,20 @@ class PackageRepository implements PackageInterface
         return $package;
     }
 
-    public function getPackageData($package_html_url)
+    public function storePackage($package_html_url)
     {
         try {
             $client = new Client();
+
             $package_full_name = substr(strchr($package_html_url, "github.com/"), 11);
             $response = $client->get('https://api.github.com/repos/' . $package_full_name)->getBody();
-            $package_data = json_decode($response, true);
 
-            return $package_data;
+            $package_data = json_decode($response, true);
         } catch (ClientException $e) {
 
             return;
         }
-    }
 
-    public function storePackage($package_data)
-    {
         $package = new Package;
         $package->name = $package_data["name"];
         $package->login = $package_data["owner"]["login"];
