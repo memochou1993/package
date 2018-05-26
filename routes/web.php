@@ -16,10 +16,11 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 /* Packages */
-Route::resource('packages', 'PackageController', ['except' => ['show']]);
+Route::resource('packages', 'PackageController', ['except' => ['show', 'edit']]);
 Route::prefix('packages')->group(function () {
     Route::get('/{package_login}', 'PackageController@list')->name('packages.list');
     Route::get('/{package_login}/{package_name}', 'PackageController@show')->name('packages.show');
+    Route::get('/{package_login}/{package_name}/edit', 'PackageController@edit')->name('packages.edit');
 });
 Route::resource('packages.contributors', 'ContributorController', ['only' => ['create', 'store', 'delete']]);
 Route::resource('packages.tags', 'TagController', ['only' => ['create', 'store', 'delete']]);

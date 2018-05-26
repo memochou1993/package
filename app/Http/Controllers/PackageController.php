@@ -40,9 +40,9 @@ class PackageController extends Controller
 
         if (empty($package)) return redirect()->back()->withErrors(['message' => "Package not found."]);
 
-        StoreContributor::dispatch($package);
+        // StoreContributor::dispatch($package);
 
-        StoreTag::dispatch($package);
+        // StoreTag::dispatch($package);
 
         return redirect()->route('packages.show', [$package->login, $package->name]);
     }
@@ -61,9 +61,9 @@ class PackageController extends Controller
         return view('package.show', compact('package'));
     }
 
-    public function edit($package_id)
+    public function edit($package_login, $package_name)
     {
-        $package = $this->package->getPackageById($package_id);
+        $package = $this->package->getPackageByFullName($package_login, $package_name);
 
         return view('package.edit', compact('package'));
     }

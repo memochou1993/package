@@ -3,59 +3,48 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Repositories\PackageRepository;
-use Mockery;
+use App\Contracts\PackageInterface;
+use App\Http\Controllers\PackageController;
+use Illuminate\Database\Eloquent\Collection;
 
 class PackageControllerTest extends TestCase
 {
     protected $mock;
+    protected $target;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->mock = $this->mock('App\Repositories\PackageRepository');
-    }
+        parent::initDatabase();
 
-    public function mock($class)
-    {
-        $mock = Mockery::mock($class);
-        $this->app->instance($class, $mock);
-
-        return $mock;
+        $this->mock = $this->initMock(PackageInterface::class);
+        $this->target = $this->app->make(PackageController::class);
     }
 
     public function testIndex()
     {
+        $expected = new Collection([
+            ['name' => 'Name 1', 'html_url' => 'HTML URL 1'],
+            ['name' => 'Name 2', 'html_url' => 'HTML URL 2'],
+            ['name' => 'Name 3', 'html_url' => 'HTML URL 3'],
+        ]);
+
         $this->mock
             ->shouldReceive('getAllPackages')
             ->once()
-            ->andReturn([]);
+            ->andReturn($expected);
 
-        $response = $this->get('/packages');
+        $actual = $this->target->index()->packages;
 
-        $response->assertViewHas('packages');
-    }
-
-    public function testStore()
-    {
-        $package_html_url = 'https://github.com/laravel/framework';
-
-        $this->mock
-            ->shouldReceive('storePackage')
-            ->once();
-
-        $response = $this->post('/packages', [
-            'html_url' => $package_html_url,
-        ]);
-
-        $response->assertStatus(302);
+        $this->assertEquals($expected, $actual);
     }
 
     public function tearDown()
     {
-        //
+        parent::resetDatabase();
+
+        $this->mock = null;
+        $this->target = null;
     }
 }

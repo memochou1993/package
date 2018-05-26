@@ -4,6 +4,7 @@ namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Artisan;
+use Mockery;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -23,6 +24,14 @@ abstract class TestCase extends BaseTestCase
         Artisan::call('migrate');
 
         Artisan::call('db:seed');
+    }
+
+    public function initMock($class)
+    {
+        $mock = Mockery::mock($class);
+        $this->app->instance($class, $mock);
+
+        return $mock;
     }
 
     protected function resetDatabase()
